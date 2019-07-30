@@ -1,0 +1,88 @@
+/*
+ * author 	@ MyoungEun Koh
+ * version 	@ 2019-07-30
+ */
+
+--Query 1A: Select the names and job start dates of all employees who work for
+--the department number 5.
+select e.F_NAME
+	 , e.L_NAME
+	 , e.DEP_ID
+  from EMPLOYEES as e
+ Inner join JOB_HISTORY as j
+    on e.EMP_ID = j.EMPL_ID
+ where  e.DEP_ID = '5';
+ 
+
+--Query 1B: Select the names, job start dates, and job titles of all employees
+--who work for the department number 5.
+select e.F_NAME
+	 , e.L_NAME 
+	 , jh.START_DATE
+	 , j.JOB_TITLE
+  from EMPLOYEES as e
+ INNER JOIN JOB_HISTORY as jh on e.EMP_ID = jh.EMPL_ID
+ INNER JOIN JOBS as j on e.JOB_ID = j.JOB_IDENT
+ where e.DEP_ID = '5'
+;
+ 
+--Query 2A: Perform a Left Outer Join on the EMPLOYEES and DEPARTMENT
+--tables and select employee id, last name, department id and department name
+--for all employees
+select e.EMP_ID
+     , e.L_NAME
+     , e.DEP_ID
+     , d.DEP_NAME
+  from EMPLOYEES as e
+  LEFT OUTER JOIN DEPARTMENTS as d on e.DEP_ID = d.DEPT_ID_DEP
+;
+
+--Query 2B: Re-write the query for 2A to limit the result set to include only the
+--rows for employees born before 1980.
+select e.EMP_ID
+	 , e.L_NAME
+	 , e.DEP_ID
+	 , d.DEP_NAME
+	 , e.B_DATE
+  from EMPLOYEES as e
+ inner join DEPARTMENTS as d on e.DEP_ID = d.DEPT_ID_DEP
+ where e.B_DATE < '1980-01-01'
+;
+ 
+--Query 2C: Re-write the query for 2A to have the result set include all the
+--employees but department names for only the employees who were born
+--before 1980.
+select e.EMP_ID
+	 , e.L_NAME
+	 , e.DEP_ID
+	 , d.DEP_NAME
+	 , e.B_DATE
+  from EMPLOYEES as e
+ inner join DEPARTMENTS as d 
+ 	on e.DEP_ID = d.DEPT_ID_DEP
+   and year(e.B_DATE) < 1980
+;
+
+--Query 3A: Perform a Full Join on the EMPLOYEES and DEPARTMENT tables
+--and select the First name, Last name and Department name of all employees.
+select e.F_NAME
+	 , e.L_NAME
+	 , d.DEP_NAME
+  from EMPLOYEES as e
+  full outer join DEPARTMENTS as d 
+    on e.DEP_ID = d.DEPT_ID_DEP
+;
+
+--Query 3B: Re-write Query 3A to have the result set include all employee
+--names but department id and department names only for male employees.
+select e.F_NAME
+	 , e.L_NAME
+	 , e.SEX
+	 , d.DEPT_ID_DEP
+	 , d.DEP_NAME
+  from EMPLOYEES as e
+  full outer join DEPARTMENTS as d
+    on e.DEP_ID = d.DEPT_ID_DEP
+   and e.SEX = 'M'
+;    
+
